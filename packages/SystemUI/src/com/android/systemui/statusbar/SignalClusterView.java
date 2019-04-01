@@ -309,7 +309,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
 
     @Override
     public void setMobileDataIndicators(IconState statusIcon, IconState qsIcon, int statusType,
-            int qsType, boolean activityIn, boolean activityOut, String typeContentDescription,
+            int qsType, boolean activityIn, boolean activityOut, int volteId, String typeContentDescription,
             String description, boolean isWide, int subId, boolean roaming) {
         PhoneState state = getState(subId);
         if (state == null) {
@@ -321,6 +321,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         state.mMobileDescription = statusIcon.contentDescription;
         state.mMobileTypeDescription = typeContentDescription;
         state.mRoaming = roaming && !mBlockRoaming;
+        state.mvolteId = volteId
         state.mActivityIn = activityIn && mActivityEnabled;
         state.mActivityOut = activityOut && mActivityEnabled;
 
@@ -625,6 +626,8 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         private int mMobileStrengthId = 0, mMobileTypeId = 0;
         private int mLastMobileStrengthId = -1;
         private int mLastMobileTypeId = -1;
+        private int mvolteId = 0;
+        private ImageView mvolte;
         private String mMobileDescription, mMobileTypeDescription;
 
         private ViewGroup mMobileGroup;
@@ -654,6 +657,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
             mMobileActivityOut = root.findViewById(R.id.mobile_out);
             mMobileSignalDrawable = new SignalDrawable(mMobile.getContext());
             mMobile.setImageDrawable(mMobileSignalDrawable);
+            mvolte = (ImageView) root.findViewById(R.id.mobile_volte);
         }
 
         public boolean apply(boolean isSecondaryIcon) {
